@@ -1,0 +1,29 @@
+server:
+  port: 10005 # 服务器端口号
+
+spring:
+  application:
+    name: member-service-nacos-provider # 服务名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # 配置Nacos地址
+  # 配置数据源信
+  datasource:
+    # 配置数据源类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/e_commerce_center_db?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+
+mybatis:
+  # 扫描 mapper.xml 所在的包
+  mapper-locations: classpath:mapper/*.xml
+  # 扫描 类型别名的实体类 所在的包
+  type-aliases-package: com.company.springcloud.entity
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 配置暴露所有的监控点

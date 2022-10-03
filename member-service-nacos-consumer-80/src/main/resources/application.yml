@@ -1,0 +1,37 @@
+server:
+  port: 80 # 服务器端口号
+
+spring:
+  application:
+    name: member-service-nacos-consumer # 服务名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # 配置Nacos地址
+    sentinel:
+      transport:
+        dashboard: localhost:8080 # 配置Sentinel dashboard地址
+        port: 8719  # 默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+      #配置该微服务从 Nacos Server获取流控规则
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: member-service-nacos-consumer
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+# 消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+service-url:
+  nacos-user-service: http://member-service-nacos-provider
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 配置暴露所有的监控点
+
+feign:
+  sentinel:
+    enabled: true # openfeign+sentinel 整合

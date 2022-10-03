@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.company.springcloud</groupId>
+    <artifactId>e-commerce-center</artifactId>
+
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>member-service-provider-10000</module>
+        <module>member-service-consumer-80</module>
+        <module>e-commerce-center-common-api</module>
+        <module>e-commerce-eureka-server-9001</module>
+        <module>e-commerce-eureka-server-9002</module>
+        <module>member-service-provider-10001</module>
+        <module>e-commerce-consumer-openfeign-80</module>
+        <module>e-commerce-gateway-20000</module>
+        <module>member-service-nacos-provider-10004</module>
+        <module>member-service-nacos-provider-10005</module>
+        <module>member-service-nacos-consumer-80</module>
+        <module>e-commerce-nacos-config-client5000</module>
+        <module>seata_account_micro_service-10012</module>
+        <module>seata_storage_micro_service-10010</module>
+        <module>seata-order-micro-service-10008</module>
+    </modules>
+    <!--pom代表父项目，可以聚合管理子项目-->
+    <packaging>pom</packaging>
+
+    <name>e-commerce-center Maven Webapp</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <!--使用最新版本的log4j , 防止安全漏洞-->
+        <log4j.version>2.17.2</log4j.version>
+        <lombok.version>1.18.20</lombok.version>
+        <mysql.version>5.1.47</mysql.version>
+        <druid.version>1.1.17</druid.version>
+        <mybatis.spring.boot.version>2.2.0</mybatis.spring.boot.version>
+    </properties>
+    <!--dependencyManagement 用于版本仲裁，本身并不会引入依赖-->
+    <dependencyManagement>
+        <dependencies>
+            <!--配置spring-boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.2.2.RELEASE</version>
+                <!--
+                    <type>pom</type> 和 <scope>import</scope>配合使用
+                    表示 父项目的子模块, 在引入springboot相关依赖时 锁定版本为2.2.2.RELEASE
+                    通过 pom + import 解决maven单继承机制
+                 -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--配置spring-cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--配置cloud-alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.1.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--配置mysql-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!--配置druid数据源-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--配置springboot整合mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+            <!--配置log4j ,使用的最新高版本-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!--插件-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

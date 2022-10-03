@@ -1,0 +1,30 @@
+server:
+  port: 10008 # 服务器端口号
+
+spring:
+  application:
+    name: seata-order-micro-service # 微服务名称
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: daniel_tx_group # 需要与自定义事务组名称保持一致
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # 配置Nacos地址
+  # 配置数据源信
+  datasource:
+    # 配置数据源类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/order_micro_service?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+
+# 配置seata日志
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  # 扫描 mapper.xml 所在的包
+  mapperLocations: classpath:mapper/*.xml
